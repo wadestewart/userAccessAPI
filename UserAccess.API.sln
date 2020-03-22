@@ -1,10 +1,10 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserAccess.API", "UserAccess.API\UserAccess.API.csproj", "{C82E806C-836E-4EF3-93E9-27D5B8BCA24E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserAccess.API", "src\UserAccess.API\UserAccess.API.csproj", "{C82E806C-836E-4EF3-93E9-27D5B8BCA24E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserAccess.Business", "UserAccess.Business\UserAccess.Business.csproj", "{4CD48031-A00D-4E43-9A64-B9FA3E167192}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserAccess.Business", "src\UserAccess.Business\UserAccess.Business.csproj", "{4CD48031-A00D-4E43-9A64-B9FA3E167192}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserAccess.Data.Mongo", "UserAccess.Data.Mongo\UserAccess.Data.Mongo.csproj", "{33528E9E-24EF-455A-A9D9-3E4A7B55D449}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserAccess.Data.Mongo", "src\UserAccess.Data.Mongo\UserAccess.Data.Mongo.csproj", "{33528E9E-24EF-455A-A9D9-3E4A7B55D449}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
