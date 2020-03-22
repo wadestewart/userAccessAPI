@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserAccess.API", "UserAccess.API\UserAccess.API.csproj", "{C82E806C-836E-4EF3-93E9-27D5B8BCA24E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserAccess.Business", "UserAccess.Business\UserAccess.Business.csproj", "{4CD48031-A00D-4E43-9A64-B9FA3E167192}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserAccess.Data.Mongo", "UserAccess.Data.Mongo\UserAccess.Data.Mongo.csproj", "{33528E9E-24EF-455A-A9D9-3E4A7B55D449}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C82E806C-836E-4EF3-93E9-27D5B8BCA24E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C82E806C-836E-4EF3-93E9-27D5B8BCA24E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C82E806C-836E-4EF3-93E9-27D5B8BCA24E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C82E806C-836E-4EF3-93E9-27D5B8BCA24E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4CD48031-A00D-4E43-9A64-B9FA3E167192}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CD48031-A00D-4E43-9A64-B9FA3E167192}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4CD48031-A00D-4E43-9A64-B9FA3E167192}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4CD48031-A00D-4E43-9A64-B9FA3E167192}.Release|Any CPU.Build.0 = Release|Any CPU
+		{33528E9E-24EF-455A-A9D9-3E4A7B55D449}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33528E9E-24EF-455A-A9D9-3E4A7B55D449}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33528E9E-24EF-455A-A9D9-3E4A7B55D449}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33528E9E-24EF-455A-A9D9-3E4A7B55D449}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
