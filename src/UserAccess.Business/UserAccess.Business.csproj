@@ -2,6 +2,7 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp3.1</TargetFramework>
+        <OutputType>Library</OutputType>
     </PropertyGroup>
 
     <ItemGroup>
@@ -11,6 +12,11 @@
     <ItemGroup>
       <PackageReference Include="AutoMapper" Version="9.0.0" />
       <PackageReference Include="BCrypt.Net-Next" Version="3.3.3" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\UserAccess.Data.Mongo\UserAccess.Data.Mongo.csproj" />
+      <ProjectReference Include="..\UserAccess.Models\UserAccess.Models.csproj" />
     </ItemGroup>
 
 
