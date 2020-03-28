@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserAccess.Business", "src\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserAccess.Data.Mongo", "src\UserAccess.Data.Mongo\UserAccess.Data.Mongo.csproj", "{33528E9E-24EF-455A-A9D9-3E4A7B55D449}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserAccess.Models", "src\UserAccess.Models\UserAccess.Models.csproj", "{7D75DE64-F18B-4901-8305-0A17946BE8E8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{33528E9E-24EF-455A-A9D9-3E4A7B55D449}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{33528E9E-24EF-455A-A9D9-3E4A7B55D449}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{33528E9E-24EF-455A-A9D9-3E4A7B55D449}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D75DE64-F18B-4901-8305-0A17946BE8E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D75DE64-F18B-4901-8305-0A17946BE8E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D75DE64-F18B-4901-8305-0A17946BE8E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D75DE64-F18B-4901-8305-0A17946BE8E8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
