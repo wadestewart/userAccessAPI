@@ -42,13 +42,18 @@ namespace UserAccess.Data.Mongo.Models
         [BsonRequired]
         public string Email { get; set; }
 
-        // /// <summary>
-        // /// The user's password
-        // /// </summary>
-        // [BsonElement("password")]
-        // [BsonRepresentation(BsonType.String)]
-        // [BsonRequired]
-        // public string Password { get; set; }
+        /// <summary>
+        /// The user's password
+        /// </summary>
+        [BsonElement("password")]
+        [BsonRepresentation(BsonType.String)]
+        [BsonRequired]
+        public string Password { get; set; }
+        
+        [BsonElement("created")]
+        [BsonRepresentation(BsonType.DateTime)]
+        [BsonRequired]
+        public DateTime Created { get; set; }
         
         /// <summary>
         /// The user's role

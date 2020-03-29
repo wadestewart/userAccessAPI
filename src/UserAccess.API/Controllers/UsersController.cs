@@ -31,7 +31,7 @@ namespace UserAccess.API.Controllers
 
         [HttpPost]
         [ProducesResponseType(typeof(UserApiModel), 200)]
-        public IActionResult CreateUser([FromBody] UserApiModel model)
+        public IActionResult CreateUser([FromBody] CreateUserModel model)
         {
             // Check if the user model is valid
             if (!ModelState.IsValid) return BadRequest(ModelState);
@@ -40,11 +40,17 @@ namespace UserAccess.API.Controllers
             var userDataModel = _mapper.Map<UserDataModel>(model);
             
             // Create the user
-            var result = _userManager?.CreateUser(userDataModel);
+            var result = _userManager?.CreateUser(model.FirstName, model.LastName, model.Email, model.Password);
             if (result == null) return StatusCode(StatusCodes.Status500InternalServerError);
             
             // Return the newly created user's model
-            return Ok(_mapper.Map<UserApiModel>(result));
+            return Ok(new UserApiModel
+            {
+                Id = result.Id,
+                FirstName = result.FirstName,
+                LastName = result.LastName,
+                Email = result.Email
+            });
         }
 
         [HttpGet]

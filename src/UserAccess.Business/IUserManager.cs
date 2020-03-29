@@ -8,7 +8,7 @@ namespace UserAccess.Business
     public interface IUserManager
     {
 
-        User CreateUser(UserDataModel userModel);
+        User CreateUser(string firstName, string lastName, string email, string password);
 
         User GetUser(string email);
         
