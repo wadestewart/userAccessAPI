@@ -11,9 +11,10 @@ namespace UserAccess.API
     {
         public MappingProfile()
         {
-            CreateMap<CreateUserModel, UserDataModel>();
-            CreateMap<UserDataModel, User>().ReverseMap();
+            CreateMap<CreateUserApiModel, UserDataModel>();
             CreateMap<User, UserApiModel>().ReverseMap();
+            CreateMap<UserUpdateApiModel, User>().ReverseMap();
+            CreateMap<UserDataModel, User>().ReverseMap();
         }
     }
 }

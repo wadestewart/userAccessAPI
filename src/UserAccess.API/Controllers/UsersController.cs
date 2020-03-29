@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using UserAccess.API.Models;
 using UserAccess.Business;
 using UserAccess.Data.Mongo.Models;
+using UserAccess.Models;
 
 namespace UserAccess.API.Controllers
 {
@@ -16,7 +18,7 @@ namespace UserAccess.API.Controllers
     /// <summary>
     ///     An api controller for a non admin user
     /// </summary>
-    [Route("api/[controller]")]
+    [Microsoft.AspNetCore.Mvc.Route("api/[controller]")]
     [Produces("application/json")]
     public class UsersController : UserAccessController
     {
@@ -28,19 +30,33 @@ namespace UserAccess.API.Controllers
             _userManager = userManager;
             _mapper = mapper;
         }
+        
+        [HttpGet]
+        [ProducesResponseType(typeof(UserApiModel), 200)]
+        public IActionResult Get(string email)
+        {
+            var user = _userManager.GetUser(email);
+            return Ok(_mapper.Map<UserApiModel>(user));
+        }
+        
+        [HttpGet]
+        [Microsoft.AspNetCore.Mvc.Route("{id}")]
+        [ProducesResponseType(typeof(UserApiModel), 200)]
+        public IActionResult GetUserById(string id)
+        {
+            var user = _userManager.GetUserById(id);
+            return Ok(_mapper.Map<UserApiModel>(user));
+        }
 
         [HttpPost]
         [ProducesResponseType(typeof(UserApiModel), 200)]
-        public IActionResult CreateUser([FromBody] CreateUserModel model)
+        public IActionResult CreateUser([FromBody] CreateUserApiModel apiModel)
         {
             // Check if the user model is valid
             if (!ModelState.IsValid) return BadRequest(ModelState);
-            
-            // Map the request model to the data model to pass to the Create
-            var userDataModel = _mapper.Map<UserDataModel>(model);
-            
+
             // Create the user
-            var result = _userManager?.CreateUser(model.FirstName, model.LastName, model.Email, model.Password);
+            var result = _userManager?.CreateUser(apiModel.FirstName, apiModel.LastName, apiModel.Email, apiModel.Password);
             if (result == null) return StatusCode(StatusCodes.Status500InternalServerError);
             
             // Return the newly created user's model
@@ -53,12 +69,21 @@ namespace UserAccess.API.Controllers
             });
         }
 
-        [HttpGet]
-        [ProducesResponseType(typeof(UserApiModel), 200)]
-        public IActionResult Get(string email)
+        [HttpPut("{id}")]
+        [ProducesResponseType(200)]
+        public IActionResult Put([FromRoute] string id, [FromBody] UserUpdateApiModel model)
         {
-            var user = _userManager.GetUser(email);
-            return Ok(_mapper.Map<UserApiModel>(user));
+            // Check if the user model is valid
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+            
+            // Add the id to the model
+            var submittedUser = _mapper.Map<User>(model);
+            submittedUser.Id = id;
+            // Update the user
+            var result = _userManager.Update(_mapper.Map<User>(submittedUser));
+            
+            // Return Ok(200)
+            return Ok();
         }
     }
 }

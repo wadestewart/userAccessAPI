@@ -3,9 +3,9 @@ using System.ComponentModel.DataAnnotations;
 namespace UserAccess.API.Models
 {
     /// <summary>
-    ///     This is the model to create a user
+    ///     This Class updates a user that is already in the system
     /// </summary>
-    public class CreateUserModel
+    public class UserUpdateApiModel
     {
         /// <summary>
         ///     The first name of the new user
