@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using UserAccess.API.Extensions;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -34,6 +35,8 @@ namespace UserAccess.API
             {
                 c.SwaggerDoc("v1", new OpenApiInfo {Title = "User Access API", Version = "v1"});
             });
+            
+            services.ConfigureDependencyInjection(Configuration);
             
             services.AddCors();
             services.AddMvc();

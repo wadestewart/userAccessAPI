@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using AutoMapper;
 using UserAccess.Data.Mongo.Collections;
@@ -28,12 +29,24 @@ namespace UserAccess.Business
         #region Public Methods
 
         /// <summary>
-        ///     Creates a new user.
+        ///     This method manges creating a user
         /// </summary>
-        /// <param name="user">The user model</param>
-        /// <returns></returns>
-        public User CreateUser(UserDataModel user)
+        /// <param name="firstName">User's first name</param>
+        /// <param name="lastName">User's last name</param>
+        /// <param name="email">User's email</param>
+        /// <param name="password">User's password</param>
+        /// <returns>New User Model</returns>
+        public User CreateUser(string firstName, string lastName, string email, string password)
         {
+            var hash = BCrypt.Net.BCrypt.HashPassword(password);
+            var user = new UserDataModel
+            {
+                FirstName = firstName,
+                LastName = lastName,
+                Email = email,
+                Password = hash,
+                Created = DateTime.Now
+            };
             var result = _userCollection.Create(user);
             return _mapper.Map<User>(result);
         }

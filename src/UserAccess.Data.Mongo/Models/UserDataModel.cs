@@ -50,6 +50,11 @@ namespace UserAccess.Data.Mongo.Models
         [BsonRequired]
         public string Password { get; set; }
         
+        [BsonElement("created")]
+        [BsonRepresentation(BsonType.DateTime)]
+        [BsonRequired]
+        public DateTime Created { get; set; }
+        
         /// <summary>
         /// The user's role
         /// </summary>
