@@ -19,6 +19,8 @@ namespace UserAccess.API
 {
     public class Startup
     {
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+        
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -38,7 +40,11 @@ namespace UserAccess.API
             
             services.ConfigureDependencyInjection(Configuration);
             
-            services.AddCors();
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: MyAllowSpecificOrigins,
+                    builder => { builder.WithOrigins("http://localhost:3000").AllowAnyHeader(); });
+            });
             services.AddMvc();
             services.AddAutoMapper(typeof(Startup));
         }
@@ -61,6 +67,8 @@ namespace UserAccess.API
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors(MyAllowSpecificOrigins);
 
             app.UseAuthorization();
 

@@ -71,7 +71,7 @@ namespace UserAccess.API.Controllers
 
         [HttpPut("{id}")]
         [ProducesResponseType(200)]
-        public IActionResult Put([FromRoute] string id, [FromBody] UserUpdateApiModel model)
+        public IActionResult Put([FromRoute(Name = "id")] string id, [FromBody] UserUpdateApiModel model)
         {
             // Check if the user model is valid
             if (!ModelState.IsValid) return BadRequest(ModelState);
@@ -84,6 +84,19 @@ namespace UserAccess.API.Controllers
             
             // Return Ok(200)
             return Ok();
+        }
+        
+        [HttpPut("{id}/roles")]
+        [ProducesResponseType(200)]
+        public IActionResult Put([FromRoute(Name = "id")] string id, [FromBody] List<string> roles)
+        {
+            // Update the user
+            var result = _userManager.UpdateUserRoles(id, roles);
+            
+            // Return Ok(200)
+            return result
+                ? StatusCode(StatusCodes.Status204NoContent)
+                : StatusCode(StatusCodes.Status500InternalServerError);
         }
     }
 }
