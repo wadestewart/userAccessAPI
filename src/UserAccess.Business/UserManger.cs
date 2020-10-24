@@ -52,6 +52,31 @@ namespace UserAccess.Business
         }
 
         /// <summary>
+        ///     This method authenticates a user
+        /// </summary>
+        /// <param name="email">User's email</param>
+        /// <param name="password">User's password</param>
+        /// <returns></returns>
+        public User Authenticate(string email, string password)
+        {
+            // null check on passed in values
+            if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
+                return null;
+
+            // get user from the data layer
+            var userDataModel = _userCollection.GetUser(email);
+            
+            // verify user exists in db
+            if (userDataModel == null) return null;
+
+            // map data model to user
+            var user = _mapper.Map<User>(userDataModel);
+
+            // authenticate user
+            return BCrypt.Net.BCrypt.Verify(password, user.Password) ? user : null;
+        }
+
+        /// <summary>
         ///     Gets a user based on the user's email.
         /// </summary>
         /// <param name="email"></param>
@@ -100,5 +125,10 @@ namespace UserAccess.Business
 
         #endregion
 
+
+        #region Private Methods
+        
+
+        #endregion
     }
 }

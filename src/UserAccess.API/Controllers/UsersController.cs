@@ -1,13 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
+using System.Text;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using UserAccess.API.Models;
+using UserAccess.API.Settings;
 using UserAccess.Business;
 using UserAccess.Data.Mongo.Models;
 using UserAccess.Models;
@@ -22,15 +28,27 @@ namespace UserAccess.API.Controllers
     [Produces("application/json")]
     public class UsersController : UserAccessController
     {
+        #region Variables
+        
         private readonly IUserManager _userManager;
+        private readonly IOptions<TokenSettings> _tokenSettings;
         private readonly IMapper _mapper;
 
-        public UsersController(IUserManager userManager, IMapper mapper)
+        #endregion
+
+        #region Constructor
+        
+        public UsersController(IUserManager userManager, IOptions<TokenSettings> tokenSettings, IMapper mapper)
         {
             _userManager = userManager;
+            _tokenSettings = tokenSettings;
             _mapper = mapper;
         }
-        
+
+        #endregion
+
+        #region Action Methods
+
         [HttpGet]
         [ProducesResponseType(typeof(UserApiModel), 200)]
         public IActionResult Get(string email)
@@ -46,6 +64,44 @@ namespace UserAccess.API.Controllers
         {
             var user = _userManager.GetUserById(id);
             return Ok(_mapper.Map<UserApiModel>(user));
+        }
+        
+        [AllowAnonymous]
+        [HttpPost("authenticate")]
+        [ProducesResponseType(typeof(UserApiModel), 200)]
+        
+        public IActionResult Authenticate([FromBody] UserAuthenticateApiModel user)
+        {
+            // Check if the user model is valid
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+            
+            var authenticateUser = _userManager.Authenticate(user.Email, user.Password);
+            if (authenticateUser == null) return StatusCode(StatusCodes.Status500InternalServerError);
+            
+            var claims = new List<Claim>()
+            {
+                new Claim(ClaimTypes.Name, "${authenticateUser.FirstName} ${authenticateUser.LastName}"),
+                new Claim(JwtRegisteredClaimNames.Email, authenticateUser.Email),
+                new Claim(JwtRegisteredClaimNames.GivenName, authenticateUser.FirstName),
+                new Claim(JwtRegisteredClaimNames.FamilyName, authenticateUser.LastName),
+                new Claim(JwtRegisteredClaimNames.Sub, authenticateUser.Id),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+            };
+            claims.AddRange(authenticateUser.Roles.Select(role => new Claim(ClaimTypes.Role, role)));
+            
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_tokenSettings.Value.Secret));
+            var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+            var token = new JwtSecurityToken(_tokenSettings.Value.Issuer, _tokenSettings.Value.Issuer, claims,
+                expires: DateTime.Now.AddMinutes(_tokenSettings.Value.Expiration), signingCredentials: credentials);
+            var tokenString = new TokenApiModel {Token = new JwtSecurityTokenHandler().WriteToken(token)};
+
+            return Ok(new
+            {
+                UserId = authenticateUser.Id,
+                UserName = authenticateUser.FirstName,
+                Token = tokenString
+            });
         }
 
         [HttpPost]
@@ -98,5 +154,8 @@ namespace UserAccess.API.Controllers
                 ? StatusCode(StatusCodes.Status204NoContent)
                 : StatusCode(StatusCodes.Status500InternalServerError);
         }
+
+        #endregion
+
     }
 }

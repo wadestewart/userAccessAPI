@@ -26,6 +26,11 @@ namespace UserAccess.API.Models
         ///     The email of the user.
         /// </summary>
         public string Email { get; set; }
+        
+        /// <summary>
+        ///     The email of the user.
+        /// </summary>
+        public string Password { get; set; }
 
         /// <summary>
         ///     The role of the user.

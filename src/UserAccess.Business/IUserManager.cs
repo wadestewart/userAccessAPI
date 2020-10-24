@@ -10,6 +10,8 @@ namespace UserAccess.Business
 
         User CreateUser(string firstName, string lastName, string email, string password);
 
+        User Authenticate(string email, string password);
+
         User GetUser(string email);
         
         User GetUserById(string userId);
